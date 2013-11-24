@@ -33,7 +33,7 @@ You can simple do it by:
 npm install faker --save-dev
 ```
 
-For using it in browser, simple load file from (bower in todo)
+For using it in browser, simple load file from
 
 ```bash
 /node_modules/faker/dist/faker.min.js
