@@ -23,7 +23,7 @@ The easiest way is to keep `faker` as a devDependency in your `package.json`.
 ```json
 {
   "devDependencies": {
-    "faker": "~0.1"
+    "faker": "~0.0.1"
   }
 }
 ```
