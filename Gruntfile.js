@@ -83,7 +83,7 @@ module.exports = function(grunt) {
             'npm-publish'
         ]);
     });
-    grunt.registerTask('commit', ['default', 'npm-contributors', 'bump']);
+    grunt.registerTask('ci', ['default', 'npm-contributors', 'bump']);
     grunt.registerTask('test', ['jshint', 'karma:unit']);
     grunt.registerTask('default', ['test', 'concat', 'uglify']);
 };
