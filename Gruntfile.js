@@ -24,7 +24,9 @@ module.exports = function(grunt) {
         bump: {
             options: {
                 commitMessage: 'chore: release v%VERSION%',
-                pushTo: 'origin'
+                pushTo: 'origin',
+                createTag: false,
+                commitFiles: ['-a']
             }
         },
         'auto-release': {
@@ -83,7 +85,7 @@ module.exports = function(grunt) {
             'npm-publish'
         ]);
     });
-    grunt.registerTask('ci', ['default', 'npm-contributors', 'bump']);
+    grunt.registerTask('ci', ['default', 'npm-contributors', 'bump-commit']);
     grunt.registerTask('test', ['jshint', 'karma:unit']);
     grunt.registerTask('default', ['test', 'concat', 'uglify']);
 };
