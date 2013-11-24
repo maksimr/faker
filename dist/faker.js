@@ -78,7 +78,7 @@
         var idx = this.index;
         var value = context[idx + 1];
         return new Array(count).join(',').split(',').map(function() {
-            return typeof value === 'object' ?  extend({}, value) : value;
+            return typeof value === 'object' ? extend({}, value) : value;
         });
     };
 
@@ -255,12 +255,29 @@
      * on their value.
      *
      * @param {Any} data The user's data
+     * @param {[Object]} directiveMap The local directives
      * @return {Any} Parsed user's data
      */
-    var parse = function(data) {
+    var parse = function(data, directiveMap) {
         var getClass = Object.prototype.toString;
 
-        var directives = parse.directiveCollection;
+        var directives = parse.defaultDirectiveCollection;
+        var localDirectivesCollection = null;
+
+        if (directiveMap) {
+            localDirectivesCollection = new DirectiveCollection();
+
+            Object.keys(parse.defaultDirectiveCollection.cache).forEach(function(key) {
+                localDirectivesCollection.add(key, parse.defaultDirectiveCollection.cache[key]);
+            });
+
+            Object.keys(directiveMap).forEach(function(key) {
+                localDirectivesCollection.add(key, directiveMap[key]);
+            });
+
+            directives = localDirectivesCollection;
+        }
+
         // inject directives
         var directiveFilter = new DirectiveFilter(directives);
         var directive = new Directive(directives);
@@ -315,12 +332,12 @@
         return $parse(data);
     };
 
-    parse.directiveCollection = new DirectiveCollection();
+    parse.defaultDirectiveCollection = new DirectiveCollection();
     parse.directive = function(directiveName, directiveConstructor) {
         if (arguments.length === 1) {
-            return parse.directiveCollection.get(directiveName);
+            return parse.defaultDirectiveCollection.get(directiveName);
         }
-        parse.directiveCollection.add(directiveName, directiveConstructor);
+        parse.defaultDirectiveCollection.add(directiveName, directiveConstructor);
     };
 
     parse.directive('numeric', numeric);

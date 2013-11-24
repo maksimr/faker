@@ -58,7 +58,7 @@ For using it in browser, simple load file from
 
 ## Creating custom directive
 
-Simple directive
+Simple directive. Add global directive
 ```javascript
 faker.directive('foo', 'bar');
 expect(faker.parse(['{{foo}}'])).to.be.eql(['bar']);
@@ -71,4 +71,11 @@ faker.directive('greet', function (person) {
 });
 
 expect(faker.parse(['{{greet("Maksim")}}'])).to.be.eql(['Hello Maksim']);
+```
+
+Run parser with local directive which shadow global directives
+```javascript
+expect(faker.parse('"{{lorem}}"', {
+    lorem: 'my-lorem'
+})).to.be.eql('my-lorem');
 ```
