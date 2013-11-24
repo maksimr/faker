@@ -7,12 +7,12 @@ module.exports = function(grunt) {
     grunt.initConfig({
         files: {
             config: ['Gruntfile.js'],
-            source: ['js/**/*.js'],
+            source: ['src/**/*.js'],
             test: ['test/unit/**/*.js'],
             all: [
-                '<%= options.files.config %>',
-                '<%= options.files.source %>',
-                '<%= options.files.test %>'
+                '<%= files.config %>',
+                '<%= files.source %>',
+                '<%= files.test %>'
             ]
         },
         'npm-contributors': {
@@ -36,7 +36,7 @@ module.exports = function(grunt) {
                 jshintrc: '.jshintrc'
             },
             all: {
-                files: '<%= options.files.all %>'
+                files: '<%= files.all %>'
             }
         },
         karma: {
@@ -53,7 +53,7 @@ module.exports = function(grunt) {
         },
         watch: {
             all: {
-                files: '<%= options.files.all %>',
+                files: '<%= files.all %>',
                 tasks: ['jshint', 'karma:continuous:run']
             }
         }
@@ -62,11 +62,10 @@ module.exports = function(grunt) {
     grunt.registerTask('release', 'Bump the version and publish to NPM.', function(type) {
         grunt.task.run([
             'npm-contributors',
-            util.format("bump:%s", type || 'patch'),
+            util.format('bump:%s', type || 'patch'),
             'npm-publish'
         ]);
     });
     grunt.registerTask('test', ['jshint', 'karma:unit']);
-    grunt.registerTask('watch', ['karma:continuous', 'watch']);
-    grunt.registerTask('default', ['test']);
+    grunt.registerTask('default', ['karma:continuous', 'watch']);
 };

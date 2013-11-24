@@ -1,14 +1,13 @@
-(function(global) {
-    /**
-     * Create sandbox for sinon functions
-     * It allow restore faked function after
-     * each test
-     */
-    beforeEach(function() {
-        global.sinon = global.sinon.sandbox.create();
-    });
+/**
+ * Create sandbox for sinon functions
+ * It allow restore faked function after
+ * each test
+ */
+/*global sinon*/
+beforeEach(function() {
+    this.sinon = sinon.sandbox.create();
+});
 
-    afterEach(function() {
-        global.sinon.restore();
-    });
-}(this));
+afterEach(function() {
+    this.sinon.restore();
+});
