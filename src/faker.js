@@ -215,32 +215,32 @@
 
             context = context || _data;
             switch (getClass.call(_data)) {
-            case '[object String]':
-                _data = $directiveParse(_data, context);
-                break;
-            case '[object Number]':
-                _data = _data;
-                break;
-            case '[object Array]':
-                context = _data.slice(0);
-                for (var i = 0, l = _data.length; i < l; i += 1) {
-                    context.idx = i;
-                    var v = $parse(_data[i], context);
-                    // If change type from string to object
-                    // then replase all context
-                    if (getClass.call(_data[i]) === '[object String]' && getClass.call(v) !== '[object String]') {
-                        _data = $parse(v);
-                        break;
+                case '[object String]':
+                    _data = $directiveParse(_data, context);
+                    break;
+                case '[object Number]':
+                    _data = _data;
+                    break;
+                case '[object Array]':
+                    context = _data.slice(0);
+                    for (var i = 0, l = _data.length; i < l; i += 1) {
+                        context.idx = i;
+                        var v = $parse(_data[i], context);
+                        // If change type from string to object
+                        // then replase all context
+                        if (getClass.call(_data[i]) === '[object String]' && getClass.call(v) !== '[object String]') {
+                            _data = $parse(v);
+                            break;
+                        }
+                        _data[i] = v;
                     }
-                    _data[i] = v;
-                }
-                break;
-            case '[object Object]':
-                Object.keys(_data).forEach(function(key) {
-                    this[key] = $parse(this[key], context);
-                }, _data);
-                break;
-            default:
+                    break;
+                case '[object Object]':
+                    Object.keys(_data).forEach(function(key) {
+                        this[key] = $parse(this[key], context);
+                    }, _data);
+                    break;
+                default:
             }
 
             return _data;
@@ -267,7 +267,7 @@
             MutableString: MutableString,
             DirectiveCollection: DirectiveCollection
         },
-        directives: {
+        directive: {
             numeric: numeric
         },
         parse: parse

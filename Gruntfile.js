@@ -5,9 +5,10 @@ module.exports = function(grunt) {
     var util = require('util');
 
     grunt.initConfig({
+        pkg: grunt.file.readJSON('package.json'),
         files: {
             config: ['Gruntfile.js'],
-            source: ['src/**/*.js'],
+            source: ['src/faker.js', 'src/**/*.js'],
             test: ['test/unit/**/*.js'],
             all: [
                 '<%= files.config %>',
@@ -39,6 +40,25 @@ module.exports = function(grunt) {
                 files: '<%= files.all %>'
             }
         },
+        concat: {
+            options: {
+                separator: ';'
+            },
+            dist: {
+                src: ['<%= files.all %>'],
+                dest: 'dist/<%= pkg.name %>.js'
+            }
+        },
+        uglify: {
+            options: {
+                banner: '/*! <%= pkg.name %> <%= grunt.template.today("dd-mm-yyyy") %> */\n'
+            },
+            dist: {
+                files: {
+                    'dist/<%= pkg.name %>.min.js': ['<%= concat.dist.dest %>']
+                }
+            }
+        },
         karma: {
             options: {
                 configFile: 'karma.conf.js',
@@ -67,5 +87,6 @@ module.exports = function(grunt) {
         ]);
     });
     grunt.registerTask('test', ['jshint', 'karma:unit']);
-    grunt.registerTask('default', ['karma:continuous', 'watch']);
+    grunt.registerTask('watch', ['karma:continuous', 'watch']);
+    grunt.registerTask('default', ['test', 'concat', 'uglify']);
 };

@@ -3,6 +3,7 @@ module.exports = function(config) {
         basePath: '',
         frameworks: ['mocha', 'expect', 'sinon'],
         files: [
+            'src/faker.js',
             'src/**/*.js',
             'test/unit/mocha-globals.js',
             'test/unit/**/*.js'
