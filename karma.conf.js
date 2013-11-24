@@ -5,7 +5,7 @@ module.exports = function(config) {
         files: [
             'src/faker.js',
             'src/**/*.js',
-            'test/unit/mocha-globals.js',
+            'test/unit/mocha-global.js',
             'test/unit/**/*.js'
         ],
         reporters: ['progress'],

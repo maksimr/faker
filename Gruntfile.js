@@ -64,9 +64,6 @@ module.exports = function(grunt) {
                 configFile: 'karma.conf.js',
                 browsers: ['PhantomJS']
             },
-            continuous: {
-                background: true
-            },
             unit: {
                 singleRun: true
             }
@@ -74,7 +71,7 @@ module.exports = function(grunt) {
         watch: {
             all: {
                 files: '<%= files.all %>',
-                tasks: ['jshint', 'karma:continuous:run']
+                tasks: ['jshint', 'karma:unit']
             }
         }
     });
@@ -86,7 +83,7 @@ module.exports = function(grunt) {
             'npm-publish'
         ]);
     });
+    grunt.registerTask('commit', ['default', 'npm-contributors', 'bump']);
     grunt.registerTask('test', ['jshint', 'karma:unit']);
-    grunt.registerTask('watch', ['karma:continuous', 'watch']);
     grunt.registerTask('default', ['test', 'concat', 'uglify']);
 };
