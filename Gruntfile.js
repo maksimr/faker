@@ -23,7 +23,7 @@ module.exports = function(grunt) {
         },
         bump: {
             options: {
-                commitMessage: 'chore: changes in v%VERSION%',
+                commitMessage: 'chore: release v%VERSION%',
                 commit: true,
                 pushTo: 'origin',
                 createTag: false,
