@@ -252,8 +252,13 @@
 
     parse.directiveCollection = new DirectiveCollection();
     parse.directive = function(directiveName, directiveConstructor) {
-        this.directiveCollection.add(directiveName, directiveConstructor);
+        if (arguments.length === 1) {
+            return parse.directiveCollection.get(directiveName);
+        }
+        parse.directiveCollection.add(directiveName, directiveConstructor);
     };
+
+    parse.directive('numeric', numeric);
 
     _global.faker = {
         core: {
@@ -267,9 +272,7 @@
             MutableString: MutableString,
             DirectiveCollection: DirectiveCollection
         },
-        directive: {
-            numeric: numeric
-        },
+        directive: parse.directive,
         parse: parse
     };
 }());
@@ -280,23 +283,22 @@
  *
  * @return {Boolean}
  */
-(function(directiveMap) {
+(function() {
     var bool = function() {
         return Boolean(Math.round(Math.random()));
     };
 
-    directiveMap.bool = bool;
-    return bool;
-}(typeof faker !== 'undefined' ? faker.directive : {}));
+    faker.directive('bool', bool);
+}());
 ;/*global faker*/
 
 /**
  * @desc Random US state name
  */
-(function(directiveMap) {
+(function() {
     'use strict';
 
-    var numeric = directiveMap.numeric;
+    var numeric = faker.directive('numeric');
 
     var state = (function() {
         var STATE = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'District of Columbia', 'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Carolina', 'North Dakota', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'];
@@ -325,10 +327,10 @@
         };
     }());
 
-    directiveMap.state = state;
-    directiveMap.city = city;
-    directiveMap.street = street;
-}(typeof faker !== 'undefined' ? faker.directive : {}));
+    faker.directive('state', state);
+    faker.directive('city', city);
+    faker.directive('street', street);
+}());
 ;/*global faker*/
 
 /**
@@ -336,19 +338,18 @@
  * @return {String} The company name
  */
 
-(function(directiveMap) {
+(function() {
     'use strict';
 
     var COMPANIES = ['Google', 'Yanex', 'Apple', 'Dell', 'Lenovo', 'IBM', 'Microsoft', 'Twitter', 'Facebook', 'Yahoo', 'PayPal', 'Ebay'];
-    var numeric = directiveMap.numeric;
+    var numeric = faker.directive('numeric');
 
     var company = function() {
         return COMPANIES[numeric(0, COMPANIES.length)];
     };
 
-    directiveMap.company = company;
-    return company;
-}(typeof faker !== 'undefined' ? faker.directive : {}));
+    faker.directive('company', company);
+}());
 ;/*global faker*/
 
 /**
@@ -359,12 +360,12 @@
  * @param {String} suffix The suffix.
  * @return {String} The email address
  */
-(function(directiveMap) {
+(function() {
     'use strict';
 
     var NAMES = ['jessie', 'tomas', 'bennie', 'tomas', 'annette', 'sylvia', 'karla', 'alexandra', 'arthur', 'cedric', 'harvey', 'francisco', 'erika', 'moses', 'bill', 'darryl', 'lola', 'sheri', 'cecelia', 'roy', 'kimberly', 'spencer', 'kelli', 'shelly', 'kenny', 'lonnie', 'carolyn', 'rufus', 'marcia', 'jermaine', 'darnell', 'luke', 'brady', 'pete', 'allison', 'gladys', 'rosemary', 'erika', 'mack', 'andrea', 'jeannie', 'enrique', 'raul', 'lynda', 'jerome', 'yolanda', 'joseph', 'domingo', 'valerie', 'duane', 'muriel', 'greg', 'james', 'rudy', 'devin', 'wade', 'dora', 'charles', 'clayton', 'steven', 'guadalupe', 'bertha', 'bethany', 'darrel', 'minnie', 'maxine', 'molly', 'claude', 'annie', 'morris', 'susie', 'mathew', 'gerardo', 'gilbert', 'barry', 'annie', 'cindy', 'vera', 'derrick', 'thomas', 'derek', 'roxanne', 'lawrence', 'sandra', 'jeanne', 'silvia', 'julie', 'pearl', 'carolyn', 'lee', 'gustavo', 'glen', 'johnnie', 'brett', 'bethany', 'sadie', 'cora', 'miranda', 'mamie', 'lester'];
     var DOMAIN_NAMES = ['cogizio', 'cogiveo', 'feednation', 'podsphere', 'browseopia', 'voomm', 'kigen', 'cogimbee', 'trutz', 'geta', 'fanoodle', 'yambu', 'photopad', 'yonte', 'gabify', 'flashster', 'gigaspot', 'brainbridge', 'leendo', 'realfeed', 'quazu', 'meeyo', 'topiccast', 'myz', 'linkpedia', 'twittervine', 'youfly', 'flipbird', 'bluepath', 'dynatz', 'snapzone', 'babblecast', 'talia', 'bluefish', 'snapspot', 'voomba', 'myster', 'kayvee', 'quiyo', 'cogiloo', 'abaloo', 'photofly', 'dazzletype', 'mylia', 'blogbird', 'cogideo', 'ealoo', 'plalium', 'camivee', 'agizu', 'mycero', 'innopath', 'agire', 'truzzy', 'tagwire', 'flashfire', 'fivetube', 'oyore', 'feedchat', 'linkcast', 'feedjam', 'muba', 'mita', 'realopia', 'kitri', 'flipmix', 'skipdrive', 'skinder', 'imbo', 'fivevine', 'bluemix', 'yakijo', 'teksphere', 'tagspace', 'truba', 'eare', 'browsepulse'];
-    var numeric = directiveMap.numeric;
+    var numeric = faker.directive('numeric');
 
     var email = function(prefix, suffix) {
         /*jshint maxcomplexity:7*/
@@ -386,19 +387,17 @@
     email.NAMES = NAMES;
     email.DOMAIN_NAMES = DOMAIN_NAMES;
 
-    directiveMap.email = email;
-
-    return email;
-}(typeof faker !== 'undefined' ? faker.directive : {}));
+    faker.directive('email', email);
+}());
 ;/*global faker*/
 
 /**
  * Lorem Ipsum is simply dummy text of the printing and typesetting industry.
  */
-(function(directiveMap) {
+(function() {
     'use strict';
 
-    var numeric = directiveMap.numeric;
+    var numeric = faker.directive('numeric');
 
     var LOREM_TEXT = [
         'Nam quis nulla. Integer malesuada. In in enim a arcu imperdiet malesuada. Sed vel lectus. Donec odio urna, tempus molestie, porttitor ut, iaculis quis, sem. Phasellus rhoncus. Aenean id metus id velit ullamcorper pulvinar. Vestibulum fermentum tortor id mi. Pellentesque ipsum. Nulla non arcu lacinia neque faucibus fringilla. Nulla non lectus sed nisl molestie malesuada. Proin in tellus sit amet nibh dignissim sagittis. Vivamus luctus egestas leo. Maecenas sollicitudin. Nullam rhoncus aliquam metus. Etiam egestas wisi a erat.',
@@ -485,19 +484,18 @@
         return data;
     };
 
-    directiveMap.lorem = lorem;
-    return lorem;
-}(typeof faker !== 'undefined' ? faker.directive : {}));
+    faker.directive('lorem', lorem);
+}());
 ;/*global faker*/
 
-(function(directiveMap) {
+(function() {
     'use strict';
 
     var MALE_FIRST_NAMES = ['Daniel', 'Dominic', 'Israel', 'Jerry', 'Thomas', 'Michael', 'Angelica', 'Joey', 'Cesar', 'Jimmie', 'Wm', 'Ian', 'Clay', 'Clinton', 'Jacob', 'Lucas', 'Cecil', 'Brian', 'Rogers', 'Luther', 'Duane', 'Moses', 'Orville', 'Angelo', 'Willie', 'Lynne', 'Alexis', 'Vernon', 'Lonnie', 'Roman', 'Morris', 'Nathan', 'Juana', 'Walter', 'Ted', 'Tyler', 'Damon', 'Douglas', 'Willard', 'Christian', 'Benny', 'Randolph', 'Wade', 'Emanuel', 'Hubert', 'Tyrone', 'Gerald', 'Elbert', 'Emmett', 'Ricardo', 'Darnell', 'Edgar', 'Matthews', 'Terry', 'Warren', 'Mitchell', 'Lionel', 'Kurt', 'Franklin', 'Ryan', 'Ellis', 'Garry', 'Kent', 'Raul', 'Patrick', 'Floyd', 'Malcolm', 'Leland', 'Chad', 'Rick', 'Douglas', 'Justin', 'Elijah', 'Alejandro', 'Irving', 'Domingo', 'Larry', 'Joseph', 'Steven', 'Darrel', 'Evans', 'Ruben', 'Omar', 'Keith', 'Harvey', 'Genevieve', 'Steven', 'Rodolfo', 'Santiago', 'Ivan', 'Bradford', 'Alton', 'Rufus', 'Travis', 'Bertha', 'Kyle', 'Fredrick', 'Arthur', 'Theodore', 'Owen'];
     var FEMALE_FIRST_NAMES = ['Tiffany', 'Nora', 'Edna', 'Maureen', 'Angela', 'Bobbie', 'Joyce', 'Tami', 'Lila', 'Betsy', 'Jessica', 'Elaine', 'Arlene', 'Renee', 'Janice', 'Tracey', 'Isabel', 'Ernestine', 'Tamara', 'Michele', 'Lora', 'Juana', 'Kay', 'Connie', 'Traci', 'Kristi', 'Robyn', 'Carla', 'Harriet', 'Luz', 'Silvia', 'Cassandra', 'Angelica', 'Leigh', 'Maryann', 'Lynne', 'Paula', 'Edith', 'Alexis', 'Kathleen', 'Whitney', 'Emma', 'Elsa', 'Rosemary', 'Paulette', 'Annette', 'Carrie', 'Maryann', 'Sheri', 'Jessie', 'Dawn', 'Bertha', 'Kimberly', 'Genevieve', 'Candace', 'Jamie', 'Debra', 'Betty', 'Rhonda', 'Diana', 'Tanya', 'Erma', 'Tonya', 'Terry', 'Lorraine', 'Ashley', 'Shawna', 'Donna', 'Sally', 'Courtney', 'Candice', 'Miriam', 'Hilda', 'Rochelle', 'Wanda', 'Dianna', 'Ada', 'Melinda', 'Mattie', 'Roxanne', 'Kara', 'Brittany', 'Audrey', 'Janice', 'Michelle', 'Olivia', 'Gwen', 'Crystal', 'Hannah', 'Melissa', 'Roberta', 'Sherry', 'Thelma', 'Jody', 'Vivian', 'Beatrice', 'Miranda', 'Katie', 'Hazel', 'Maxine'];
     var LAST_NAMES = ['Jennings', 'Bradley', 'Carpenter', 'Matthews', 'Webster', 'Park', 'Casey', 'Tyler', 'Howell', 'Sutton', 'Bates', 'Rogers', 'Clark', 'Hopkins', 'Ball', 'Lindsey', 'Alvarado', 'Wilkins', 'Brady', 'Wells', 'Hansen', 'Todd', 'Jones', 'Parsons', 'Martin', 'Phillips', 'Nash', 'Grant', 'Fernandez', 'Thornton', 'Scott', 'Morton', 'Murphy', 'Sherman', 'Duncan', 'Walton', 'Griffith', 'Luna', 'Perry', 'Ferguson', 'Mccarthy', 'Hogan', 'Roy', 'Brock', 'Byrd', 'Rivera', 'Boone', 'Woods', 'Gomez', 'Frank', 'Graham', 'Logan', 'Gilbert', 'Weber', 'Stone', 'Barker', 'Moreno', 'Moody', 'Lyons', 'Romero', 'Sanchez', 'Huff', 'Haynes', 'Delgado', 'Turner', 'Owens', 'Hawkins', 'Holmes', 'Francis', 'Walsh', 'Munoz', 'Burns', 'Reese', 'Greer', 'May', 'Weaver', 'Harris', 'Johnston', 'Richardson', 'Castro', 'Mitchell', 'Flowers', 'Anderson', 'Miles', 'Miller', 'Cook', 'Farmer', 'Hart', 'Copeland', 'Mann', 'Hanson', 'Fuller', 'Ramsey', 'Aguilar', 'Vasquez', 'Porter', 'Garza', 'Thomas', 'Kennedy', 'Bridges'];
 
-    var numeric = directiveMap.numeric;
+    var numeric = faker.directive('numeric');
 
     /**
      * @desc Generate random first name.
@@ -555,10 +553,10 @@
         };
     }());
 
-    directiveMap.firstName = names.firstName;
-    directiveMap.lastName = names.lastName;
-    directiveMap.fullName = names.fullName;
-}(typeof faker !== 'undefined' ? faker.directive : {}));
+    faker.directive('firstName', names.firstName);
+    faker.directive('lastName', names.lastName);
+    faker.directive('fullName', names.fullName);
+}());
 ;/*global faker*/
 
 /**
@@ -566,10 +564,10 @@
  * @param {String} format The phone's mask. For example `8 ### ###-##-##`.
  * By default `###-###-####`
  */
-(function(directiveMap) {
+(function() {
     'use strict';
 
-    var numeric = directiveMap.numeric;
+    var numeric = faker.directive('numeric');
 
     var phone = function(format) {
         format = '###-###-####' || format;
@@ -578,6 +576,5 @@
         });
     };
 
-    directiveMap.phone = phone;
-    return phone;
-}(typeof faker !== 'undefined' ? faker.directive : {}));
+    faker.directive('phone', phone);
+}());

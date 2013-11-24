@@ -1,7 +1,7 @@
 /*global faker*/
 
 describe('lorem', function() {
-    var lorem = faker.directive.lorem;
+    var lorem = faker.directive('lorem');
 
     describe('words', function() {
         it('should generate words by default', function() {

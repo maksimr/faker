@@ -5,10 +5,10 @@
  * @param {String} format The phone's mask. For example `8 ### ###-##-##`.
  * By default `###-###-####`
  */
-(function(directiveMap) {
+(function() {
     'use strict';
 
-    var numeric = directiveMap.numeric;
+    var numeric = faker.directive('numeric');
 
     var phone = function(format) {
         format = '###-###-####' || format;
@@ -17,6 +17,5 @@
         });
     };
 
-    directiveMap.phone = phone;
-    return phone;
-}(typeof faker !== 'undefined' ? faker.directive : {}));
+    faker.directive('phone', phone);
+}());

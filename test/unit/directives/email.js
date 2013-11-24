@@ -1,7 +1,7 @@
 /*global faker*/
 
 describe('email', function() {
-    var email = faker.directive.email;
+    var email = faker.directive('email');
 
     it('should generate email', function() {
         expect(email()).to.match(/^([a-zA-Z0-9_.-])+@([a-zA-Z0-9_.-])+\.([a-zA-Z])+([a-zA-Z])+/);

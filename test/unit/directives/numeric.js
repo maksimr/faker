@@ -1,7 +1,7 @@
 /*global faker*/
 
 describe('numeric', function() {
-    var numeric = faker.directive.numeric;
+    var numeric = faker.directive('numeric');
 
     it('should generate random number', function() {
         expect(numeric(2, 3)).to.be.within(2, 3);

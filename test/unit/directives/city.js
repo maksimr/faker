@@ -1,9 +1,9 @@
 /*global faker*/
 
 describe('city', function() {
-    var city = faker.directive.city;
-    var state = faker.directive.state;
-    var street = faker.directive.street;
+    var city = faker.directive('city');
+    var state = faker.directive('state');
+    var street = faker.directive('street');
 
     describe('state', function() {
         it('should generate random state name', function() {

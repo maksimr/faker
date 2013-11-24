@@ -252,8 +252,13 @@
 
     parse.directiveCollection = new DirectiveCollection();
     parse.directive = function(directiveName, directiveConstructor) {
-        this.directiveCollection.add(directiveName, directiveConstructor);
+        if (arguments.length === 1) {
+            return parse.directiveCollection.get(directiveName);
+        }
+        parse.directiveCollection.add(directiveName, directiveConstructor);
     };
+
+    parse.directive('numeric', numeric);
 
     _global.faker = {
         core: {
@@ -267,9 +272,7 @@
             MutableString: MutableString,
             DirectiveCollection: DirectiveCollection
         },
-        directive: {
-            numeric: numeric
-        },
+        directive: parse.directive,
         parse: parse
     };
 }());

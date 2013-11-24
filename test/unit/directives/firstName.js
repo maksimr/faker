@@ -1,9 +1,9 @@
 /*global faker*/
 
 describe('names', function() {
-    var firstName = faker.directive.firstName;
-    var lastName = faker.directive.lastName;
-    var fullName = faker.directive.fullName;
+    var firstName = faker.directive('firstName');
+    var lastName = faker.directive('lastName');
+    var fullName = faker.directive('fullName');
 
     describe('firstName', function() {
         it('should generate random first name', function() {

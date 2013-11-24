@@ -5,16 +5,15 @@
  * @return {String} The company name
  */
 
-(function(directiveMap) {
+(function() {
     'use strict';
 
     var COMPANIES = ['Google', 'Yanex', 'Apple', 'Dell', 'Lenovo', 'IBM', 'Microsoft', 'Twitter', 'Facebook', 'Yahoo', 'PayPal', 'Ebay'];
-    var numeric = directiveMap.numeric;
+    var numeric = faker.directive('numeric');
 
     var company = function() {
         return COMPANIES[numeric(0, COMPANIES.length)];
     };
 
-    directiveMap.company = company;
-    return company;
-}(typeof faker !== 'undefined' ? faker.directive : {}));
+    faker.directive('company', company);
+}());
