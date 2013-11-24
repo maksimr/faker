@@ -292,7 +292,7 @@
     parse.directive('numeric', numeric);
     parse.directive('repeat', repeat);
 
-    _global.faker = {
+    var faker = _global.faker = {
         core: {
             raise: raise,
             fromJSON: fromJSON,
@@ -307,6 +307,12 @@
         directive: parse.directive,
         parse: parse
     };
+
+    if (typeof exports === 'object') {
+        exports.faker = faker;
+    }
+
+    return faker;
 }());
 ;/*global faker*/
 
