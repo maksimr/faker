@@ -61,7 +61,7 @@ For using it in browser, simple load file from (bower in todo)
 Simple directive
 ```javascript
 faker.directive('foo', 'bar');
-expect(faker.parse(['{{foo}}'])).to.be.eql('bar');
+expect(faker.parse(['{{foo}}'])).to.be.eql(['bar']);
 ```
 
 More complex directive with usage of function
