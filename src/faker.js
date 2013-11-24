@@ -40,6 +40,32 @@
     }(parseInt, Math));
 
     /**
+     * Clone object
+     * Need for repeat function
+     */
+    var extend = function(dist, source) {
+        var getClass = Object.prototype.toString;
+
+        Object.keys(source).forEach(function(key) {
+            var value = source[key];
+
+            if (getClass.call(value) === '[Object Object]') {
+                dist[key] = extend({}, value);
+                return;
+            }
+
+            if (getClass.call(value) === '[Object Array]') {
+                dist[key] = extend([], value);
+                return;
+            }
+
+            dist[key] = value;
+        });
+
+        return dist;
+    };
+
+    /**
      * TODO(maksimrv): Improve implementation
      *
      * @desc Repeat elemnts in array
@@ -49,11 +75,19 @@
         count = count || 1;
 
         var context = this;
-        var idx = this.idx;
+        var idx = this.index;
         var value = context[idx + 1];
         return new Array(count).join(',').split(',').map(function() {
-            return value;
+            return typeof value === 'object' ?  extend({}, value) : value;
         });
+    };
+
+    /**
+     * Directive index
+     * @desc Return index of element in array
+     */
+    var index = function() {
+        return String(this.index + 1);
     };
 
     /**
@@ -255,7 +289,7 @@
                 case '[object Array]':
                     context = _data.slice(0);
                     for (var i = 0, l = _data.length; i < l; i += 1) {
-                        context.idx = i;
+                        context.index = i;
                         var v = $parse(_data[i], context);
                         // If change type from string to object
                         // then replase all context
@@ -291,6 +325,7 @@
 
     parse.directive('numeric', numeric);
     parse.directive('repeat', repeat);
+    parse.directive('index', index);
 
     var faker = _global.faker = {
         core: {

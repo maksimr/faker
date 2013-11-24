@@ -212,11 +212,17 @@ describe('faker', function() {
             }]);
         });
 
-        it('idx', function() {
-            parse.directive('index', function() {
-                var idx = this.idx;
-                return String(idx + 1);
-            });
+        it('repeat should create copy of object', function() {
+            expect(parse(['{{repeat(2)}}', {
+                id: '{{index}}'
+            }])).to.eql([{
+                id: '1'
+            }, {
+                id: '2'
+            }]);
+        });
+
+        it('index', function() {
             expect(parse(['{{repeat(3)}}', '{{index}}'])).to.eql(['1', '2', '3']);
         });
 
