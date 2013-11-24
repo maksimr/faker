@@ -219,5 +219,10 @@ describe('faker', function() {
             });
             expect(parse(['{{repeat(3)}}', '{{index}}'])).to.eql(['1', '2', '3']);
         });
+
+        it('should set zero value', function() {
+            parse.directive('null', 0);
+            expect(parse(['{{null}}'])).to.eql([0]);
+        });
     });
 });

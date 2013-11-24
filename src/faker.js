@@ -6,6 +6,13 @@
     }());
 
     /**
+     * Check undefined value or not
+     */
+    var isUndefined = function(value) {
+        return typeof value === 'undefined';
+    };
+
+    /**
      * @desc Generates random number in range from "min" max "max". If "min" is float,
      * generated number will be float too. If you pass only one parameter
      * than it equal to numeric(0,`param`).
@@ -131,7 +138,8 @@
      */
     var DirectiveFilter = function($directives) {
         return function(directive) {
-            return !!$directives.get(directive[1]);
+            var directiveValue = $directives.get(directive[1]);
+            return isUndefined(directiveValue) ? false : true;
         };
     };
 
@@ -224,7 +232,13 @@
         var directive = new Directive(directives);
 
         var $directiveParse = function(data, context) {
-            return (getDirectives(data).filter(directiveFilter).map(directive).map(new DirectiveApply(new MutableString(data), context)).shift() || data).valueOf();
+            var directiveValue = getDirectives(data).filter(directiveFilter).map(directive).map(new DirectiveApply(new MutableString(data), context)).shift();
+
+            if (isUndefined(directiveValue)) {
+                return data;
+            }
+
+            return directiveValue.valueOf();
         };
 
         var $parse = function(_data, context) {
@@ -245,7 +259,7 @@
                         var v = $parse(_data[i], context);
                         // If change type from string to object
                         // then replase all context
-                        if (getClass.call(_data[i]) === '[object String]' && getClass.call(v) !== '[object String]') {
+                        if (getClass.call(_data[i]) === '[object String]' && getClass.call(v) === '[object Array]') {
                             _data = $parse(v);
                             break;
                         }
