@@ -1,0 +1,22 @@
+{
+    "curly": true,
+    "eqeqeq": true,
+    "es3": true,
+    "freeze": true,
+    "immed": true,
+    "indent": 4,
+    "latedef": true,
+    "newcap": true,
+    "noarg": true,
+    "quotmark": "single"
+    "undef": true,
+    "unused": true,
+    "trailing": true,
+    "maxparams": 3,
+    "maxlen": 40,
+    "maxcomplexity": 4,
+    "sub": true,
+    "boss": true,
+    "eqnull": true,
+    "node": true
+}
