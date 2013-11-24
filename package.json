@@ -2,7 +2,7 @@
   "name": "faker",
   "title": "faker",
   "description": "Library for creating dinamic mock stucture",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "scripts": {
     "test": "grunt test"
   },

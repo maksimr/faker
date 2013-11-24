@@ -81,6 +81,7 @@ module.exports = function(grunt) {
 
     grunt.registerTask('release', 'Bump the version and publish to NPM.', function(type) {
         grunt.task.run([
+            'default',
             'npm-contributors',
             util.format('bump:%s', type || 'patch'),
             'npm-publish'
