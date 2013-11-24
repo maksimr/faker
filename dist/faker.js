@@ -33,6 +33,23 @@
     }(parseInt, Math));
 
     /**
+     * TODO(maksimrv): Improve implementation
+     *
+     * @desc Repeat elemnts in array
+     * @param {Number} count The count of repeats
+     */
+    var repeat = function(count) {
+        count = count || 1;
+
+        var context = this;
+        var idx = this.idx;
+        var value = context[idx + 1];
+        return new Array(count).join(',').split(',').map(function() {
+            return value;
+        });
+    };
+
+    /**
      * @desc Raise error
      *
      * @param {String} type The error type
@@ -259,6 +276,7 @@
     };
 
     parse.directive('numeric', numeric);
+    parse.directive('repeat', repeat);
 
     _global.faker = {
         core: {
