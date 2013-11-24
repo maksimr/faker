@@ -1,0 +1,21 @@
+{
+    "name": "faker",
+    "version": "0.0.3",
+    "main": "dist/faker.js",
+    "ignore": [
+        "**/.*",
+        "build",
+        "speed",
+        "test",
+        "*.md",
+        "AUTHORS.txt",
+        "Gruntfile.js",
+        "package.json",
+        "bower.json"
+    ],
+    "description": "Library for creating dinamic mock stucture",
+    "keywords": [
+        "test",
+        "mock"
+    ]
+}
