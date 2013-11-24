@@ -200,16 +200,8 @@ describe('faker', function() {
             expect(parse(['{{lala}} {{lala}}'])).to.eql(['lala lala']);
         });
 
+        // Directive repeat
         it('should expand context directive', function() {
-            parse.directive('repeat', function(count) {
-                var context = this;
-                var idx = this.idx;
-                var value = context[idx + 1];
-                return new Array(count).join(',').split(',').map(function() {
-                    return value;
-                });
-            });
-
             expect(parse(['{{repeat(3)}}', 'lala'])).to.eql(['lala', 'lala', 'lala']);
             expect(parse(['{{repeat(2)}}', {
                 lala: ['{{repeat(2)}}', '{{lala}}']
