@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/maksimr/faker.png?branch=master)](https://travis-ci.org/maksimr/faker) [![Build Status](https://drone.io/github.com/maksimr/faker/status.png)](https://drone.io/github.com/maksimr/faker/latest)
 
-> Library for creating dinamic mock stucture
+> Library for creating dynamic mock structures
 
 ## Example of usage
 
